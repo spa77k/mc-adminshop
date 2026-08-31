@@ -1,0 +1,4 @@
+target/
+server-data-26.1.2/
+dependency-reduced-pom.xml
+.DS_Store

@@ -1,0 +1,24 @@
+name: AdminShop
+version: '${project.version}'
+main: dev.spa.adminshop.AdminShopPlugin
+api-version: "1.21"
+author: spa
+description: 管理者が無限在庫でスキルや護符を売るショップ
+depend: [Vault]
+
+commands:
+  shop:
+    description: 管理者ショップを開く
+    usage: /shop
+    aliases: [adminshop]
+  ashop:
+    description: 管理者ショップの管理コマンド
+    usage: /ashop <give|reload>
+
+permissions:
+  adminshop.use:
+    description: 管理者ショップの利用
+    default: true
+  adminshop.admin:
+    description: 商品の付与と設定の再読み込み
+    default: op
