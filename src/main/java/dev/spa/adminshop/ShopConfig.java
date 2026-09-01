@@ -80,8 +80,10 @@ final class ShopConfig {
                 config.getBoolean("protection.keep-offhand", true),
                 config.getBoolean("protection.keep-hotbar", true),
                 config.getBoolean("protection.broadcast", false),
-                Math.max(1, config.getInt("growth-boost.max-total-minutes", 120)),
-                config.getBoolean("growth-boost.boss-bar", true),
+                Math.max(1, config.getInt("boosts.max-total-minutes",
+                        config.getInt("growth-boost.max-total-minutes", 120))),
+                config.getBoolean("boosts.boss-bar",
+                        config.getBoolean("growth-boost.boss-bar", true)),
                 items);
     }
 
@@ -159,7 +161,7 @@ final class ShopConfig {
         return broadcast;
     }
 
-    /** 成長ブーストを重ねられる上限（分）。 */
+    /** サーバー全体に効く商品を1種類あたり何分まで重ねられるか。 */
     int boostMaxTotalMinutes() {
         return boostMaxTotalMinutes;
     }

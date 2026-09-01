@@ -78,13 +78,14 @@ final class ActivityLog {
         append(activationsFile, fields);
     }
 
-    void logBoost(UUID uuid, String name, int minutes, int multiplier, long endsAt) {
+    void logBoost(UUID uuid, String name, String perk, int minutes, int level, long endsAt) {
         Map<String, Object> fields = new LinkedHashMap<>();
         fields.put("at", now());
         fields.put("player", name);
         fields.put("uuid", uuid.toString());
+        fields.put("perk", perk);
         fields.put("minutes", minutes);
-        fields.put("multiplier", multiplier);
+        fields.put("level", level);
         fields.put("ends_at", ZonedDateTime.ofInstant(java.time.Instant.ofEpochMilli(endsAt), ZONE).format(TIMESTAMP));
         append(boostsFile, fields);
     }

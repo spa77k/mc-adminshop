@@ -5,12 +5,7 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockGrowEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * 豊穣の鐘の効果。
@@ -29,12 +24,12 @@ final class GrowthBoostListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onGrow(BlockGrowEvent event) {
-        GrowthBoostService boost = plugin.growthBoost();
-        if (!boost.isActive()) {
+        ServerBoostService boosts = plugin.boosts();
+        if (!boosts.isActive(BoostType.GROWTH)) {
             return;
         }
 
-        int extraStages = boost.multiplier() - 1;
+        int extraStages = boosts.level(BoostType.GROWTH) - 1;
         if (extraStages <= 0) {
             return;
         }
@@ -50,31 +45,5 @@ final class GrowthBoostListener implements Listener {
         }
         ageable.setAge(grown);
         newState.setBlockData(ageable);
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onUse(PlayerInteractEvent event) {
-        // 両手ぶん発火するため、利き手のぶんだけを見る。
-        if (event.getHand() != EquipmentSlot.HAND) {
-            return;
-        }
-        Action action = event.getAction();
-        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) {
-            return;
-        }
-
-        ItemStack stack = event.getItem();
-        if (!plugin.perkItems().hasPerk(stack, Perks.GROWTH_BOOST)) {
-            return;
-        }
-
-        // 鐘が地面に設置されたり、右クリック本来の動作が起きたりしないよう必ず止める。
-        event.setCancelled(true);
-        plugin.growthBoost().use(event.getPlayer(), stack);
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        plugin.growthBoost().showTo(event.getPlayer());
     }
 }

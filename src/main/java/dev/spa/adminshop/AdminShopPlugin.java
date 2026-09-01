@@ -12,7 +12,7 @@ public final class AdminShopPlugin extends JavaPlugin {
     private ActivityLog activityLog;
     private ShopGui shopGui;
     private PurchaseService purchases;
-    private GrowthBoostService growthBoost;
+    private ServerBoostService boosts;
 
     @Override
     public void onEnable() {
@@ -30,12 +30,14 @@ public final class AdminShopPlugin extends JavaPlugin {
         this.activityLog = ActivityLog.open(this);
         this.purchases = new PurchaseService(this);
         this.shopGui = new ShopGui(this);
-        this.growthBoost = new GrowthBoostService(this);
-        growthBoost.load();
+        this.boosts = new ServerBoostService(this);
+        boosts.load();
 
         getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         getServer().getPluginManager().registerEvents(new DeathProtectionListener(this), this);
+        getServer().getPluginManager().registerEvents(new BoostListener(this), this);
         getServer().getPluginManager().registerEvents(new GrowthBoostListener(this), this);
+        getServer().getPluginManager().registerEvents(new SmeltBoostListener(this), this);
 
         register("shop", new ShopCommand(this), null);
         AdminCommand adminCommand = new AdminCommand(this);
@@ -46,8 +48,8 @@ public final class AdminShopPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (growthBoost != null) {
-            growthBoost.shutdown();
+        if (boosts != null) {
+            boosts.shutdown();
         }
     }
 
@@ -92,7 +94,7 @@ public final class AdminShopPlugin extends JavaPlugin {
         return purchases;
     }
 
-    GrowthBoostService growthBoost() {
-        return growthBoost;
+    ServerBoostService boosts() {
+        return boosts;
     }
 }

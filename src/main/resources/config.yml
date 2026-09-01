@@ -31,8 +31,9 @@ protection:
   # 発動をサーバー全体に知らせる。DiscordSRV が入っていればDiscordにも流れる。
   broadcast: false
 
-growth-boost:
-  # 豊穣の鐘を重ねられる上限（分）。これを超える延長は断る。
+# サーバー全体に一定時間だけ効く商品（豊穣の鐘・溶鉱の号鐘・鉱脈の号鐘・疾風の笛）に共通の設定。
+boosts:
+  # 同じ種類を重ねられる上限（分）。これを超える延長は断る。上限は種類ごとに別々に数える。
   # 上限がないと、まとめ買いした人が丸一日ぶん先に積んでしまい、他の人が使う機会がなくなる。
   max-total-minutes: 120
   # 効果が続いている間、全員のボスバーに残り時間を出す。
@@ -42,7 +43,7 @@ growth-boost:
 items:
   keepsake_charm:
     # ショップGUIの何番目の枠に置くか（0始まり）。
-    slot: 13
+    slot: 11
     # 不死のトーテムは使わない。手に持っているとバニラの復活効果が先に働いてしまい、
     # そもそも死亡しないため護符が発動しないという分かりにくい挙動になる。
     material: HEART_OF_THE_SEA
@@ -60,11 +61,11 @@ items:
     amount: 1
     # エンチャント光沢を付ける。
     glow: true
-    # 効果の種類。現在は keepsake_charm のみ実装している。
+    # 効果の種類。効果そのものは Java 側の実装が要る。
     perk: keepsake_charm
 
   harvest_bell:
-    slot: 15
+    slot: 12
     material: BELL
     display-name: "&a豊穣の鐘"
     lore:
@@ -85,3 +86,68 @@ items:
       duration-minutes: 30
       # 成長の倍率。2 なら、作物が1段階育つたびにもう1段階進む。
       multiplier: 2
+
+  smelting_bell:
+    slot: 13
+    material: BLAST_FURNACE
+    display-name: "&c溶鉱の号鐘"
+    lore:
+      - "&7右クリックで鳴らすと、サーバー全体の"
+      - "&7かまど・溶鉱炉・燻製器が30分間だけ"
+      - "&72倍の速さで焼き上がる。"
+      - ""
+      - "&7燃料の減りは変わらない。"
+      - "&7効いているのは、鳴らしたあとに"
+      - "&7新しく焼き始めたぶんだけ。"
+      - ""
+      - "&7効果が続いている間に鳴らすと延長する。"
+    price: 3000.0
+    amount: 1
+    glow: true
+    perk: smelt_boost
+    perk-options:
+      duration-minutes: 30
+      # 焼き上がりの速さの倍率。2 なら調理時間が半分になる。
+      multiplier: 2
+
+  mining_bell:
+    slot: 14
+    material: DEEPSLATE_DIAMOND_ORE
+    display-name: "&b鉱脈の号鐘"
+    lore:
+      - "&7右クリックで鳴らすと、居合わせた全員に"
+      - "&730分間だけ採掘速度上昇が付く。"
+      - ""
+      - "&7鳴らした人だけは1段階上になる。"
+      - "&7効果中に鳴らした人は全員が対象。"
+      - ""
+      - "&7効果が続いている間に鳴らすと延長する。"
+    price: 3000.0
+    amount: 1
+    glow: true
+    perk: mining_boost
+    perk-options:
+      duration-minutes: 30
+      # 全員に付く採掘速度上昇の表示レベル。鳴らした人はこれより1段階上になる。
+      level: 1
+
+  gale_flute:
+    slot: 15
+    material: GOAT_HORN
+    display-name: "&e疾風の笛"
+    lore:
+      - "&7右クリックで吹くと、居合わせた全員に"
+      - "&720分間だけ移動速度上昇が付く。"
+      - ""
+      - "&7吹いた人だけは1段階上になり、"
+      - "&7落下ダメージを和らげる効果も付く。"
+      - ""
+      - "&7効果が続いている間に吹くと延長する。"
+    price: 2000.0
+    amount: 1
+    glow: true
+    perk: speed_boost
+    perk-options:
+      duration-minutes: 20
+      # 全員に付く移動速度上昇の表示レベル。吹いた人はこれより1段階上になる。
+      level: 1
