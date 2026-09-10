@@ -52,6 +52,42 @@ final class ShopConfig {
         String title = config.getString("shop.title", "&8[&6管理者ショップ&8]");
         int size = normalizeSize(config.getInt("shop.size", 27));
 
+        // saveDefaultConfig は既存ファイルを更新しないため、新商品だけを一度追加する。
+        // 明示的な商品設定と、以後の削除は尊重する。
+        if (!config.getBoolean("migrations.return-charm", false)) {
+            if (!config.contains("items.return_charm", true)) {
+                var defaults = config.getDefaults();
+                var product = defaults == null ? null
+                        : defaults.getConfigurationSection("items.return_charm");
+                boolean[] occupied = new boolean[size];
+                var existing = config.getConfigurationSection("items");
+                if (existing != null) {
+                    for (String id : existing.getKeys(false)) {
+                        int slot = existing.getInt(id + ".slot", -1);
+                        if (slot >= 0 && slot < size) occupied[slot] = true;
+                    }
+                }
+                int free = -1;
+                for (int offset = 0; offset < size; offset++) {
+                    int slot = (16 + offset) % size;
+                    if (!occupied[slot]) {
+                        free = slot;
+                        break;
+                    }
+                }
+                if (product != null && free >= 0) {
+                    for (var entry : product.getValues(false).entrySet()) {
+                        config.set("items.return_charm." + entry.getKey(), entry.getValue());
+                    }
+                    config.set("items.return_charm.slot", free);
+                } else {
+                    plugin.getLogger().warning("帰還の護符を自動追加できません。商品設定とショップの空き枠を確認してください。");
+                }
+            }
+            config.set("migrations.return-charm", true);
+            plugin.saveConfig();
+        }
+
         Map<String, ShopItem> items = new LinkedHashMap<>();
         ConfigurationSection itemsSection = config.getConfigurationSection("items");
         if (itemsSection != null) {

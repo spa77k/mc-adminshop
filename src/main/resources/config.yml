@@ -41,6 +41,22 @@ boosts:
 
 # 売り物。キーが商品IDになる。
 items:
+  return_charm:
+    slot: 16
+    material: RECOVERY_COMPASS
+    display-name: "&b帰還の護符"
+    lore:
+      - "&7メインハンドに持って右クリックすると、"
+      - "&7自分が最後に死んだ場所の近くへ戻る。"
+      - "&7移動に成功すると1個消える。"
+      - ""
+      - "&7近くに安全な足場がなければ使用できない。"
+      - "&7落とした持ち物が残っている保証はない。"
+    price: 500.0
+    amount: 1
+    glow: true
+    perk: return_charm
+
   keepsake_charm:
     # ショップGUIの何番目の枠に置くか（0始まり）。
     slot: 11
