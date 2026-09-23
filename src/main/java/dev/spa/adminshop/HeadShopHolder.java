@@ -4,19 +4,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-/** ショップの一覧画面。開いている画面がショップかどうかを、この型で見分ける。 */
-final class ShopHolder implements InventoryHolder {
+/** 装飾ヘッド一覧の画面。 */
+final class HeadShopHolder implements InventoryHolder {
+    static final int BACK_SLOT = 49;
 
     private Inventory inventory;
-    private int headSlot = -1;
-
-    int headSlot() {
-        return headSlot;
-    }
-
-    void setHeadSlot(int slot) {
-        this.headSlot = slot;
-    }
 
     @Override
     public @NotNull Inventory getInventory() {

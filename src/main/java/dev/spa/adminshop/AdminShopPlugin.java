@@ -12,6 +12,7 @@ public final class AdminShopPlugin extends JavaPlugin {
     private ActivityLog activityLog;
     private ShopGui shopGui;
     private PurchaseService purchases;
+    private HeadCatalog headCatalog;
     private ServerBoostService boosts;
 
     @Override
@@ -19,6 +20,7 @@ public final class AdminShopPlugin extends JavaPlugin {
         saveDefaultConfig();
         this.shopConfig = ShopConfig.load(this);
         this.perkItems = new PerkItems(this);
+        this.headCatalog = HeadCatalog.load(this);
 
         this.economy = EconomyService.hook(this);
         if (economy == null) {
@@ -44,7 +46,8 @@ public final class AdminShopPlugin extends JavaPlugin {
         AdminCommand adminCommand = new AdminCommand(this);
         register("ashop", adminCommand, adminCommand);
 
-        getLogger().info("商品 " + shopConfig.items().size() + " 件を読み込みました。");
+        getLogger().info("商品 " + shopConfig.items().size() + " 件、装飾ヘッド "
+                + headCatalog.items().size() + " 件を読み込みました。");
     }
 
     @Override
@@ -93,6 +96,10 @@ public final class AdminShopPlugin extends JavaPlugin {
 
     PurchaseService purchases() {
         return purchases;
+    }
+
+    HeadCatalog headCatalog() {
+        return headCatalog;
     }
 
     ServerBoostService boosts() {

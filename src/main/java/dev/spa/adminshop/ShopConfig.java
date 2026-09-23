@@ -25,12 +25,13 @@ final class ShopConfig {
     private final boolean broadcast;
     private final int boostMaxTotalMinutes;
     private final boolean boostBossBar;
+    private final double headPrice;
     private final Map<String, ShopItem> items;
 
     private ShopConfig(String title, int size, String currencySymbol, boolean currencySuffix,
                        boolean protectOnPvpDeath, boolean keepArmor, boolean keepOffhand,
                        boolean keepHotbar, boolean broadcast, int boostMaxTotalMinutes,
-                       boolean boostBossBar, Map<String, ShopItem> items) {
+                       boolean boostBossBar, double headPrice, Map<String, ShopItem> items) {
         this.title = title;
         this.size = size;
         this.currencySymbol = currencySymbol;
@@ -42,6 +43,7 @@ final class ShopConfig {
         this.broadcast = broadcast;
         this.boostMaxTotalMinutes = boostMaxTotalMinutes;
         this.boostBossBar = boostBossBar;
+        this.headPrice = headPrice;
         this.items = items;
     }
 
@@ -106,6 +108,12 @@ final class ShopConfig {
             plugin.getLogger().warning("config.yml に有効な商品がひとつもありません。ショップは空のまま開きます。");
         }
 
+        double headPrice = config.getDouble("heads.price", 50.0D);
+        if (!Double.isFinite(headPrice) || headPrice <= 0.0D) {
+            plugin.getLogger().warning("heads.price が不正なため50Sを使います: " + headPrice);
+            headPrice = 50.0D;
+        }
+
         return new ShopConfig(
                 title,
                 size,
@@ -120,6 +128,7 @@ final class ShopConfig {
                         config.getInt("growth-boost.max-total-minutes", 120))),
                 config.getBoolean("boosts.boss-bar",
                         config.getBoolean("growth-boost.boss-bar", true)),
+                headPrice,
                 items);
     }
 
@@ -208,6 +217,10 @@ final class ShopConfig {
 
     Collection<ShopItem> items() {
         return items.values();
+    }
+
+    double headPrice() {
+        return headPrice;
     }
 
     ShopItem item(String id) {

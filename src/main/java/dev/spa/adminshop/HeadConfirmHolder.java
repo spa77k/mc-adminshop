@@ -4,18 +4,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-/** ショップの一覧画面。開いている画面がショップかどうかを、この型で見分ける。 */
-final class ShopHolder implements InventoryHolder {
-
+/** 装飾ヘッドの購入確認画面。 */
+final class HeadConfirmHolder implements InventoryHolder {
+    private final String headId;
     private Inventory inventory;
-    private int headSlot = -1;
 
-    int headSlot() {
-        return headSlot;
+    HeadConfirmHolder(String headId) {
+        this.headId = headId;
     }
 
-    void setHeadSlot(int slot) {
-        this.headSlot = slot;
+    String headId() {
+        return headId;
     }
 
     @Override

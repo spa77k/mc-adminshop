@@ -1,0 +1,170 @@
+# 2014年の元祖MHFアカウント42種類。2026-09-23にMojang公開プロフィールから取得した見た目を固定。
+heads:
+  MHF_Alex:
+    name: "アレックスのヘッド"
+    uuid: "6ab43178-89fd-4905-97f6-0f67d9d76fd9"
+    texture: "83cee5ca6afcdb171285aa00e8049c297b2dbeba0efb8ff970a5677a1b644032"
+  MHF_Blaze:
+    name: "ブレイズのヘッド"
+    uuid: "4c38ed11-596a-4fd4-ab1d-26f386c1cbac"
+    texture: "d06e342f90ec538aaa1552b224f264a040840902e126d91ece6139aa5b3c7cc3"
+  MHF_CaveSpider:
+    name: "洞窟グモのヘッド"
+    uuid: "cab28771-f0cd-4fe7-b129-02c69eba79a5"
+    texture: "77b07063a6874fa3e22548e02062bd733c25885929809624180aebb851557f6a"
+  MHF_Chicken:
+    name: "ニワトリのヘッド"
+    uuid: "92deafa9-4307-42d9-b003-88601598d6c0"
+    texture: "916b8e98389c541bb36453850bcbd1f7bc5a57da62dcc505060409737ec5b72a"
+  MHF_Cow:
+    name: "ウシのヘッド"
+    uuid: "f159b274-c22e-4340-b7c1-52abde147713"
+    texture: "d0e4e6fbf5f3dcf94422a1f319448f152369d179dbfbcdf00e5bfe8495fa977"
+  MHF_Creeper:
+    name: "クリーパーのヘッド"
+    uuid: "057b1c47-1321-4863-a6fe-8887f9ec265f"
+    texture: "ba5e95735a3f3772b1b485e1502807ae396a72c61bfd36ab41fa71bec2f64aa2"
+  MHF_Enderman:
+    name: "エンダーマンのヘッド"
+    uuid: "40ffb372-12f6-4678-b3f2-2176bf56dd4b"
+    texture: "1b09a3752510e914b0bdc9096b392bb359f7a8e8a9566a02e7f66faff8d6f89e"
+  MHF_Ghast:
+    name: "ガストのヘッド"
+    uuid: "063085a6-797f-4785-be1a-21cd7580f752"
+    texture: "4a4e42eb15a08813a6a6f61f10aa288019fa0fae106a2953ddb46f77ee2d77f"
+  MHF_Golem:
+    name: "アイアンゴーレムのヘッド"
+    uuid: "757f90b2-2344-4b8d-8dac-824232e2cece"
+    texture: "1c6cd7202c34e78f3073090349f7d973b288af5e5b7334dd249010b3f27078f9"
+  MHF_Herobrine:
+    name: "ヘロブラインのヘッド"
+    uuid: "9586e5ab-157a-4658-ad80-b07552a9ca63"
+    texture: "2c65ed2829c83e119a80dfb22216443e878ef10649c4a354f74bf45ad06bc1a7"
+  MHF_LavaSlime:
+    name: "マグマキューブのヘッド"
+    uuid: "0972bdd1-4b86-49fb-9ecc-a353f8491a51"
+    texture: "d90d61e8ce9511a0a2b5ea2742cb1ef36131380ed4129e1b163ce8ff000de8ea"
+  MHF_MushroomCow:
+    name: "ムーシュルームのヘッド"
+    uuid: "a46817d6-73c5-4f3f-b712-af6b3ff47b96"
+    texture: "123cfc5582454fcf9906f841fda2cc6ae896cf455821c4ada1998de70877cc86"
+  MHF_Ocelot:
+    name: "ヤマネコのヘッド"
+    uuid: "1bee9df5-4f71-42a2-bf52-d97970d3fea3"
+    texture: "118b6b79783368dfe0042985110da366f9c788b45097a3ea6d0d9a753e9f42c6"
+  MHF_Pig:
+    name: "ブタのヘッド"
+    uuid: "8b57078b-f1bd-45df-83c4-d88d16768fbe"
+    texture: "a562a37b871f964bfc3e1311ea672aaa03984a5dc472154a34dc25af157e382b"
+  MHF_PigZombie:
+    name: "旧ゾンビピッグマンのヘッド"
+    uuid: "18a2bb50-334a-4084-9184-2c380251a24b"
+    texture: "916d167c5744ed14ebc02f447f32614059362b7d2ecb808ff06165d2c343bef2"
+  MHF_Sheep:
+    name: "ヒツジのヘッド"
+    uuid: "dfaad551-4e7e-45a1-a6f7-c6fc5ec823ac"
+    texture: "7ca38ccf417e99ca9d47eeb15a8a30edb1507aa52b678c220c717c474aa6fe3e"
+  MHF_Skeleton:
+    name: "スケルトンのヘッド"
+    uuid: "a3f427a8-18c5-49c5-a4fb-64c6e0e1e0a8"
+    texture: "22795c3c6f36d67decf9a3195e128040bec5226b055f2b16d46fa19a9180e023"
+  MHF_Slime:
+    name: "スライムのヘッド"
+    uuid: "870aba93-40e8-48b3-89c5-32ece00d6630"
+    texture: "86c27b013f1bf3344869e81e5c610027bc45ec5b79514fdc96e01df1b7e3a387"
+  MHF_Spider:
+    name: "クモのヘッド"
+    uuid: "5ad55f34-41b6-4bd2-9c32-18983c635936"
+    texture: "f61a49541a836aa8f4f76e0d4cb2ff04888c62f9411ea10cbacf1f2a54424240"
+  MHF_Squid:
+    name: "イカのヘッド"
+    uuid: "72e64683-e313-4c36-a408-c66b64e94af5"
+    texture: "5e89101d5cc74aa458021a060f6289a51a35a7d34d8caddfc3cdf3b2c9a071a"
+  MHF_Steve:
+    name: "スティーブのヘッド"
+    uuid: "c06f8906-4c8a-4911-9c29-ea1dbd1aab82"
+    texture: "d5c4ee5ce20aed9e33e866c66caa37178606234b3721084bf01d13320fb2eb3f"
+  MHF_Villager:
+    name: "村人のヘッド"
+    uuid: "bd482739-767c-45dc-a1f8-c33c40530952"
+    texture: "b4bd832813ac38e68648938d7a32f6ba29801aaf317404367f214b78b4d4754c"
+  MHF_WSkeleton:
+    name: "ウィザースケルトンのヘッド"
+    uuid: "7ed571a5-9fb8-416c-8b9d-fb2f446ab5b2"
+    texture: "ba96e9d76bed30090ce6e2d8425996594eec6d68ac88cf07356e9814834243ec"
+  MHF_Zombie:
+    name: "ゾンビのヘッド"
+    uuid: "daca2c3d-719b-41f5-b624-e4039e6c04bd"
+    texture: "d97e4259379a06f24843c1bb42f2df35c13f801ad079f715bded488db8f57c3"
+  MHF_Cactus:
+    name: "サボテンのヘッド"
+    uuid: "1d9048db-e836-4b9a-a108-55014922f1ae"
+    texture: "40d4c8e90edef8cde2b89c7b1c65ba02ec3341bad115e00de2199105ff173d94"
+  MHF_Cake:
+    name: "ケーキのヘッド"
+    uuid: "afb489c4-9fc8-48a4-98f2-dd7bea414c9a"
+    texture: "ec241a597c285e104c271196d785db4cd0110a40c8f8e5d354c5644159567c9d"
+  MHF_Chest:
+    name: "チェストのヘッド"
+    uuid: "73d4e068-3a6d-4c8b-8f85-3323546955c4"
+    texture: "758305e527fcf08525fdff07e4cd6e79774acdd426cc27327d45df8a5ff86419"
+  MHF_CoconutB:
+    name: "茶色のココナッツのヘッド"
+    uuid: "62efa973-f626-4092-aede-57ffbe84ff2b"
+    texture: "7b3fd7d375bde51828c6f6ec888b2ea86f23fa348db7bdde03f7e007c3c2400b"
+  MHF_CoconutG:
+    name: "緑のココナッツのヘッド"
+    uuid: "74556fea-28ed-4458-8db2-9a8220da0c12"
+    texture: "bafb834fac9d1ff2a8061ce917b50eb89ced932fdf50e37b971c75bc8d139f8a"
+  MHF_Melon:
+    name: "スイカのヘッド"
+    uuid: "1c7d9784-47ea-4bf3-bc23-acf260b436e6"
+    texture: "8092d760c453625594662c9fc868152a01a1f6f8d6137fb868da5a95bbd1f58"
+  MHF_OakLog:
+    name: "オークの原木のヘッド"
+    uuid: "e224e5ec-e299-4005-ae22-3b0f77a57714"
+    texture: "ebe1da01f174d46239166dc5fb4a0af88b9ee38b7da918f33d838bca85ba7f3c"
+  MHF_Present1:
+    name: "プレゼント（赤）のヘッド"
+    uuid: "156b251b-12e0-4829-a130-a61b53ba7720"
+    texture: "2e10ac999703c735bf7ba6da63f9842d415c5bde07a742f96f3060e11ccfa6c6"
+  MHF_Present2:
+    name: "プレゼント（緑）のヘッド"
+    uuid: "f1eb7cad-e2c0-4e9e-8aad-1eae21d5fd95"
+    texture: "407c0d34f90548abf94040e5167c1e07c3427b920f66680d7356e23e11c1a77f"
+  MHF_Pumpkin:
+    name: "カボチャのヘッド"
+    uuid: "f44d355b-b6ae-4ba8-8e62-ae6441854785"
+    texture: "b162d72d8d576d9bbb81c9aedc690617416dedc95ccf17f794580ca674942a65"
+  MHF_TNT:
+    name: "TNTのヘッド"
+    uuid: "d43af93c-c330-4a3d-bab8-ee74234a011a"
+    texture: "f92408fe8d0a3ef5531065e9f566c31aa6eb37484031a46e4466615daf64f705"
+  MHF_TNT2:
+    name: "TNT（別柄）のヘッド"
+    uuid: "55e73380-a973-4a52-9bb5-1efa5256125c"
+    texture: "dc75cd6f9c713e9bf43fea963990d142fc0d252974ebe04b2d882166cbb6d294"
+  MHF_ArrowUp:
+    name: "上矢印のヘッド"
+    uuid: "fef039ef-e6cd-4987-9c84-26a3e6134277"
+    texture: "a156b31cbf8f774547dc3f9713a770ecc5c727d967cb0093f26546b920457387"
+  MHF_ArrowDown:
+    name: "下矢印のヘッド"
+    uuid: "68f59b9b-5b0b-4b05-a9f2-e1d1405aa348"
+    texture: "fe3d755cecbb13a39e8e9354823a9a02a01dce0aca68ffd42e3ea9a9d29e2df2"
+  MHF_ArrowLeft:
+    name: "左矢印のヘッド"
+    uuid: "a68f0b64-8d14-4000-a95f-4b9ba14f8df9"
+    texture: "f7aacad193e2226971ed95302dba433438be4644fbab5ebf818054061667fbe2"
+  MHF_ArrowRight:
+    name: "右矢印のヘッド"
+    uuid: "50c8510b-5ea0-4d60-be9a-7d542d6cd156"
+    texture: "d34ef0638537222b20f480694dadc0f85fbe0759d581aa7fcdf2e43139377158"
+  MHF_Exclamation:
+    name: "びっくりマークのヘッド"
+    uuid: "d3c47f6f-ae3a-45c1-ad7c-e2c762b03ae6"
+    texture: "40b05e699d28b3a278a92d169dca9d57c0791d07994d82de3f9ed4a48afe0e1d"
+  MHF_Question:
+    name: "はてなマークのヘッド"
+    uuid: "606e2ff0-ed77-4842-9d6c-e1d3321c7838"
+    texture: "d34e063cafb467a5c8de43ec78619399f369f4a52434da8017a983cdd92516a0"

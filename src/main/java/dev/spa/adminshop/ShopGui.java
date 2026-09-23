@@ -29,6 +29,41 @@ final class ShopGui {
         for (ShopItem item : config.items()) {
             inventory.setItem(item.slot(), display(item, player, config));
         }
+        int headSlot = inventory.getItem(22) == null ? 22 : inventory.firstEmpty();
+        if (headSlot >= 0) {
+            holder.setHeadSlot(headSlot);
+            inventory.setItem(headSlot, button(Material.PLAYER_HEAD, "&e装飾ヘッド",
+                    List.of("&7MHFヘッド42種類を選ぶ", "&6各 " + config.formatMoney(config.headPrice()))));
+        }
+        player.openInventory(inventory);
+    }
+
+    void openHeadShop(Player player) {
+        ShopConfig config = plugin.shopConfig();
+        HeadShopHolder holder = new HeadShopHolder();
+        Inventory inventory = plugin.getServer().createInventory(holder, 54, Text.of("&8[&6装飾ヘッド&8]"));
+        holder.setInventory(inventory);
+
+        double balance = plugin.economy().balance(player);
+        int slot = 0;
+        for (HeadItem head : plugin.headCatalog().items()) {
+            inventory.setItem(slot++, display(head, balance, config));
+        }
+        inventory.setItem(HeadShopHolder.BACK_SLOT, button(Material.ARROW, "&eショップに戻る", List.of()));
+        player.openInventory(inventory);
+    }
+
+    void openHeadConfirm(Player player, HeadItem head) {
+        ShopConfig config = plugin.shopConfig();
+        HeadConfirmHolder holder = new HeadConfirmHolder(head.id());
+        Inventory inventory = plugin.getServer().createInventory(holder, CONFIRM_SIZE, Text.of("&8本当に購入しますか？"));
+        holder.setInventory(inventory);
+        inventory.setItem(ConfirmHolder.BUY_SLOT, button(Material.LIME_CONCRETE, "&a購入する",
+                List.of("&7" + config.formatMoney(config.headPrice()) + " を支払う")));
+        inventory.setItem(ConfirmHolder.ITEM_SLOT,
+                display(head, plugin.economy().balance(player), config));
+        inventory.setItem(ConfirmHolder.CANCEL_SLOT, button(Material.RED_CONCRETE, "&cやめる",
+                List.of("&7装飾ヘッド一覧へ戻る")));
         player.openInventory(inventory);
     }
 
@@ -58,6 +93,18 @@ final class ShopGui {
         lore.add(Text.item("&7所持金: &f" + config.formatMoney(plugin.economy().balance(player))));
         meta.lore(lore);
 
+        stack.setItemMeta(meta);
+        return stack;
+    }
+
+    private ItemStack display(HeadItem head, double balance, ShopConfig config) {
+        ItemStack stack = head.create();
+        ItemMeta meta = stack.getItemMeta();
+        meta.lore(List.of(
+                Text.item("&7建築に飾れるプレイヤーヘッド"),
+                Text.item(""),
+                Text.item("&6価格: &f" + config.formatMoney(config.headPrice())),
+                Text.item("&7所持金: &f" + config.formatMoney(balance))));
         stack.setItemMeta(meta);
         return stack;
     }
