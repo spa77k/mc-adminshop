@@ -1,6 +1,7 @@
 package dev.spa.adminshop;
 
 import org.bukkit.command.PluginCommand;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /** 管理者が無限在庫で商品を売るショップ。 */
@@ -55,6 +56,20 @@ public final class AdminShopPlugin extends JavaPlugin {
         if (boosts != null) {
             boosts.shutdown();
         }
+    }
+
+    /** 他プラグインの報酬用に、購入時と同じ効果データを持つ商品を1個作る。 */
+    public ItemStack createRewardItem(String productId) {
+        if (!isEnabled() || shopConfig == null || perkItems == null) {
+            return null;
+        }
+        ShopItem item = shopConfig.item(productId);
+        if (item == null) {
+            return null;
+        }
+        ShopItem single = new ShopItem(item.id(), item.slot(), item.material(), item.displayName(),
+                item.lore(), item.price(), 1, item.glow(), item.perk(), item.options());
+        return perkItems.create(single);
     }
 
     private void register(String name, org.bukkit.command.CommandExecutor executor,

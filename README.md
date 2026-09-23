@@ -37,6 +37,7 @@ PaperMC サーバー向けの、管理者が無限在庫で商品を売るショ
 - 使用しても記録は残ります。再使用するには別の護符が必要です
 
 商品ID・効果IDは `return_charm`。管理者は `/ashop give <プレイヤー> return_charm` でも渡せます。
+EcoLifeAssistの14マス目は公開メソッド `AdminShopPlugin#createRewardItem("return_charm")` から、購入時と同じ効果データを持つ護符を1個受け取ります。AdminShop停止中または商品が未登録なら `null` を返し、EcoLifeAssistはその日の受け取りを保留します。
 既存設定には初回の起動時に空き枠へ商品を追加します（16番を優先）。空き枠がない場合は警告を出すため、
 ショップを広げて `config.yml` に商品を追加してください。価格や表示位置は `items.return_charm` で変更できます。
 
