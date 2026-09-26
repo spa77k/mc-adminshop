@@ -1,5 +1,6 @@
 package dev.spa.adminshop;
 
+import dev.spa.adminshop.event.ServerBoostActivatedEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -157,6 +158,9 @@ final class ServerBoostService {
 
         stack.setAmount(stack.getAmount() - 1);
         announce(player, type, boost, minutes, wasActive);
+        plugin.getServer().getPluginManager().callEvent(new ServerBoostActivatedEvent(
+                player.getName(), type.itemName(), minutes,
+                (int) Math.ceil(remainingMillis(type) / (double) ONE_MINUTE), boost.level, wasActive));
 
         ActivityLog activityLog = plugin.activityLog();
         if (activityLog != null) {
