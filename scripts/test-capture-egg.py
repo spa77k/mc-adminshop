@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""隔離Paperで42種類の装飾ヘッドを読み込めることを確認する。"""
+"""隔離Paperで運搬の卵の入れる・出すを実イベント経由で確認する。"""
 
 from pathlib import Path
 import os
@@ -11,7 +11,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "server-data-26.1.2"
-WORK = ROOT / "target/head-paper-smoke"
+WORK = ROOT / "target/capture-egg-smoke"
 JAVA = os.environ.get("JAVA_BIN", "/opt/homebrew/opt/openjdk/bin/java")
 
 
@@ -28,17 +28,17 @@ def main():
             raise SystemExit(f"必要なファイルがありません: {source}")
         shutil.copy2(source, target)
 
-    with zipfile.ZipFile(plugins / "HeadProbe.jar", "w") as jar:
-        jar.writestr("plugin.yml", "name: HeadProbe\nversion: 1\n"
-                     "main: dev.spa.adminshop.PaperHeadProbe\n"
+    with zipfile.ZipFile(plugins / "CaptureEggProbe.jar", "w") as jar:
+        jar.writestr("plugin.yml", "name: CaptureEggProbe\nversion: 1\n"
+                     "main: dev.spa.adminshop.CaptureEggProbe\n"
                      "api-version: '1.21'\ndepend: [AdminShop, Vault, Essentials]\n")
-        for source in (ROOT / "target/test-classes/dev/spa/adminshop").glob("PaperHeadProbe*.class"):
+        for source in (ROOT / "target/test-classes/dev/spa/adminshop").glob("CaptureEggProbe*.class"):
             jar.write(source, "dev/spa/adminshop/" + source.name)
 
     (WORK / "eula.txt").write_text("eula=true\n")
     (WORK / "server.properties").write_text(
-        "server-ip=127.0.0.1\nserver-port=25582\nonline-mode=false\n"
-        "spawn-protection=0\nmax-players=1\n"
+        "server-ip=127.0.0.1\nserver-port=25583\nonline-mode=false\n"
+        "spawn-protection=0\nmax-players=1\nlevel-type=minecraft\\:flat\n"
     )
 
     process = subprocess.Popen(
@@ -55,7 +55,7 @@ def main():
             lines.append(line)
             if "Done (" in line:
                 ready.set()
-            if "HEAD_PROBE_PASS" in line or "HEAD_PROBE_FAIL" in line:
+            if "EGG_PROBE_PASS" in line or "EGG_PROBE_FAIL" in line:
                 probe_done.set()
 
     thread = threading.Thread(target=read_output, daemon=True)
@@ -77,12 +77,12 @@ def main():
         thread.join(timeout=2)
 
     output = "".join(lines)
-    expected = "商品 7 件、装飾ヘッド 42 件を読み込みました。"
-    if expected not in output or "HEAD_PROBE_PASS" not in output or "HEAD_PROBE_FAIL" in output:
+    expected = "商品 7 件"
+    if expected not in output or "EGG_PROBE_PASS" not in output or "EGG_PROBE_FAIL" in output:
         print(output[-6000:])
-        raise SystemExit("AdminShopの装飾ヘッド検証に失敗しました")
-    print("Paper 26.1.2で42種類の一覧と50S購入をテスト用Playerで確認しました。")
-    print("GUI操作と購入の実クライアント確認は別途必要です。")
+        raise SystemExit("運搬の卵の検証に失敗しました")
+    print("Paper 26.1.2で運搬の卵の入れる・出すをテスト用Playerで確認しました。")
+    print("実クライアントでの操作確認は別途必要です。")
 
 
 if __name__ == "__main__":

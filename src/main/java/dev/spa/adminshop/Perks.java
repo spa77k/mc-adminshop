@@ -29,8 +29,14 @@ final class Perks {
     /** 使うと、居合わせた全員に一定時間だけ移動速度上昇が付く。 */
     static final String SPEED_BOOST = "speed_boost";
 
-    private static final Set<String> KNOWN =
-            Set.of(KEEPSAKE_CHARM, RETURN_CHARM, GROWTH_BOOST, SMELT_BOOST, MINING_BOOST, SPEED_BOOST);
+    /** 空の卵。生き物へ右クリックすると、その子をステータスごと中身入りの卵へ入れる。 */
+    static final String CAPTURE_EGG = "capture_egg";
+
+    /** 中身入りの卵。ショップでは売らず、空の卵から作られる。地面へ右クリックすると中の子が出て、卵は消える。 */
+    static final String CAPTURE_EGG_FILLED = "capture_egg_filled";
+
+    private static final Set<String> KNOWN = Set.of(KEEPSAKE_CHARM, RETURN_CHARM, GROWTH_BOOST, SMELT_BOOST,
+            MINING_BOOST, SPEED_BOOST, CAPTURE_EGG);
 
     private Perks() {
     }

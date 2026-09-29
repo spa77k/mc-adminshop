@@ -22,3 +22,9 @@ permissions:
   adminshop.admin:
     description: 商品の付与と設定の再読み込み
     default: op
+  adminshop.capture:
+    description: 運搬の卵の利用
+    default: true
+  adminshop.capture.bypass:
+    description: 他人のペット・他人の土地の生き物にも運搬の卵を使える
+    default: op

@@ -48,6 +48,11 @@ final class PerkItems {
         return stack;
     }
 
+    /** 商品ではないアイテム（中身入りの卵など）に、効果の種類だけを書き込む。 */
+    void mark(ItemMeta meta, String perk) {
+        meta.getPersistentDataContainer().set(perkKey, PersistentDataType.STRING, perk);
+    }
+
     /** 効果を持たないアイテムなら null を返す。 */
     String perkOf(ItemStack stack) {
         if (stack == null || stack.getType().isAir() || !stack.hasItemMeta()) {
