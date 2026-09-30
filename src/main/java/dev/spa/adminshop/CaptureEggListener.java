@@ -1,7 +1,10 @@
 package dev.spa.adminshop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -62,7 +65,15 @@ final class CaptureEggListener implements Listener {
     /** 卵に持たせるNBTの上限。荷物を詰めたロバなどでアイテム同期が重くなりすぎるのを防ぐ。 */
     private static final int DEFAULT_MAX_BYTES = 65536;
 
+    /**
+     * 入れた直後に、同じ右クリックから続けて届く「アイテムの使用」を無視する時間（ミリ秒）。
+     * 生き物への右クリックは、取り込み後に地面への右クリックとしても処理されることがあり、
+     * 中身入りになった卵をその場で出してしまい、入れた意味がなくなる。
+     */
+    private static final long RELEASE_DELAY_MILLIS = 300L;
+
     private final AdminShopPlugin plugin;
+    private final Map<UUID, Long> capturedAt = new HashMap<>();
     private final ClaimGuard claims;
     private final NamespacedKey dataKey;
 
@@ -173,6 +184,7 @@ final class CaptureEggListener implements Listener {
             inventory.setItemInMainHand(filled);
         }
 
+        capturedAt.put(player.getUniqueId(), System.nanoTime());
         player.sendMessage(Text.prefixed("&f" + description + " &7を卵に入れました。"));
         player.playSound(where, Sound.ENTITY_ITEM_PICKUP, 0.8F, 0.8F);
         player.getWorld().spawnParticle(org.bukkit.Particle.HAPPY_VILLAGER,
@@ -209,12 +221,27 @@ final class CaptureEggListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
+        if (justCaptured(player)) {
+            return;
+        }
         // 開けるブロック（チェスト・ドアなど）はそちらを優先する。しゃがむと卵の使用を優先できる。
         if (event.useInteractedBlock() != Event.Result.DENY && clicked.getType().isInteractable()
                 && !player.isSneaking()) {
             return;
         }
         release(player, stack, clicked, event.getBlockFace());
+    }
+
+    private boolean justCaptured(Player player) {
+        Long at = capturedAt.get(player.getUniqueId());
+        if (at == null) {
+            return false;
+        }
+        if ((System.nanoTime() - at) / 1_000_000L < RELEASE_DELAY_MILLIS) {
+            return true;
+        }
+        capturedAt.remove(player.getUniqueId());
+        return false;
     }
 
     private void release(Player player, ItemStack egg, Block clicked, BlockFace face) {

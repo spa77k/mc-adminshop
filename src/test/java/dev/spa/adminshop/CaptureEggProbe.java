@@ -134,6 +134,16 @@ public final class CaptureEggProbe extends JavaPlugin {
         check(hasPerk(shop, user.hand, "capture_egg_filled"), "hand holds filled egg");
         check(user.hand.getMaxStackSize() == 1, "filled egg does not stack");
 
+        // 実クライアントでは、入れた直後の同じ右クリックが地面への使用としても届く。ここで出てはいけない。
+        Block ground0 = world.getBlockAt(base.getBlockX() + 3, base.getBlockY() - 1, base.getBlockZ() + 6);
+        ground0.setType(Material.STONE);
+        Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(user.player, Action.RIGHT_CLICK_BLOCK,
+                user.hand, ground0, BlockFace.UP, EquipmentSlot.HAND));
+        check(hasPerk(shop, user.hand, "capture_egg_filled"), "filled egg not released by the same click");
+        check(world.getNearbyEntitiesByType(Villager.class, ground0.getLocation(), 3).isEmpty(),
+                "nothing released by the same click");
+        Thread.sleep(400);
+
         // 卵は他人のプレイヤーが使っても同じ結果になる（譲渡できる）。出す側は別のPlayerで行う。
         ItemStack filled = user.hand;
         user.hand = null;
@@ -170,6 +180,7 @@ public final class CaptureEggProbe extends JavaPlugin {
         user.hand = egg(shop);
         Bukkit.getPluginManager().callEvent(new PlayerInteractEntityEvent(user.player, wolf, EquipmentSlot.HAND));
         check(!wolf.isValid(), "own wolf captured");
+        Thread.sleep(400);
         ItemStack wolfEgg = user.hand;
         Block ground2 = world.getBlockAt(base.getBlockX() - 6, base.getBlockY() - 1, base.getBlockZ());
         ground2.setType(Material.STONE);
@@ -200,6 +211,7 @@ public final class CaptureEggProbe extends JavaPlugin {
         horse.setJumpStrength(0.83);
         Bukkit.getPluginManager().callEvent(new PlayerInteractEntityEvent(user.player, horse, EquipmentSlot.HAND));
         check(!horse.isValid(), "own horse captured");
+        Thread.sleep(400);
         Block ground3 = world.getBlockAt(base.getBlockX(), base.getBlockY() - 1, base.getBlockZ() - 8);
         ground3.setType(Material.STONE);
         Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(user.player, Action.RIGHT_CLICK_BLOCK,
@@ -225,6 +237,7 @@ public final class CaptureEggProbe extends JavaPlugin {
         user.hand = egg(shop);
         Villager tight = (Villager) world.spawnEntity(base.clone().add(0, 0, -8), EntityType.VILLAGER);
         Bukkit.getPluginManager().callEvent(new PlayerInteractEntityEvent(user.player, tight, EquipmentSlot.HAND));
+        Thread.sleep(400);
         ItemStack tightEgg = user.hand;
         Block low = world.getBlockAt(base.getBlockX() + 12, base.getBlockY() - 1, base.getBlockZ());
         low.setType(Material.STONE);
