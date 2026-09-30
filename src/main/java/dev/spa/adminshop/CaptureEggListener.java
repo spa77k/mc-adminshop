@@ -37,7 +37,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -317,13 +316,12 @@ final class CaptureEggListener implements Listener {
         }
     }
 
-    /** 中身入りの卵を落としても、溶岩・炎・爆発で燃えたり消えたりしないようにする。 */
+    /** 中身入りの卵を落としても、溶岩・炎・爆発で燃えないようにする。時間による消滅は通常どおり残す。 */
     @EventHandler
     public void onDrop(ItemSpawnEvent event) {
         Item item = event.getEntity();
         if (plugin.perkItems().hasPerk(item.getItemStack(), Perks.CAPTURE_EGG_FILLED)) {
             item.setInvulnerable(true);
-            item.setUnlimitedLifetime(true);
         }
     }
 
@@ -331,13 +329,6 @@ final class CaptureEggListener implements Listener {
     public void onDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Item item
                 && plugin.perkItems().hasPerk(item.getItemStack(), Perks.CAPTURE_EGG_FILLED)) {
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onDespawn(ItemDespawnEvent event) {
-        if (plugin.perkItems().hasPerk(event.getEntity().getItemStack(), Perks.CAPTURE_EGG_FILLED)) {
             event.setCancelled(true);
         }
     }
