@@ -41,7 +41,6 @@ public final class AdminShopPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ReturnCharmListener(this), this);
         getServer().getPluginManager().registerEvents(new BoostListener(this), this);
         getServer().getPluginManager().registerEvents(new GrowthBoostListener(this), this);
-        getServer().getPluginManager().registerEvents(new SmeltBoostListener(this), this);
         getServer().getPluginManager().registerEvents(new CaptureEggListener(this), this);
 
         register("shop", new ShopCommand(this), null);

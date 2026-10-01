@@ -7,11 +7,11 @@ import org.bukkit.potion.PotionEffectType;
 /**
  * サーバー全体に一定時間だけ効く商品の一覧。
  *
- * 4種類とも「右クリックで使うと、現実の時間でN分だけサーバー全体に効く」という同じ形をしている。
+ * 3種類とも「右クリックで使うと、現実の時間でN分だけサーバー全体に効く」という同じ形をしている。
  * 残り時間の管理・ボスバー・再起動をまたぐ保存・重ねがけの上限・告知は ServerBoostService が
  * まとめて受け持ち、種類ごとに違うところだけをこの表に書く。
  *
- * potion が null のものは効果の中身を専用のリスナーが実装する（作物の成長、かまどの火力）。
+ * potion が null のものは効果の中身を専用のリスナーが実装する（作物の成長）。
  * potion があるものはプレイヤーへポーション効果を配るだけで済むので、リスナーは要らない。
  */
 enum BoostType {
@@ -20,12 +20,6 @@ enum BoostType {
     GROWTH(Perks.GROWTH_BOOST, "豊穣の鐘", "鳴らしました", "農作物の成長", "&a", BossBar.Color.GREEN,
             Sound.BLOCK_BELL_USE, "multiplier", 30, 2,
             "&fサーバー全体の農作物の成長が &a%s &fになります。",
-            null, null),
-
-    /** かまど・溶鉱炉・燻製器の焼き上がりを速める。効果は SmeltBoostListener が実装する。 */
-    SMELT(Perks.SMELT_BOOST, "溶鉱の号鐘", "鳴らしました", "かまどの火力", "&c", BossBar.Color.RED,
-            Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, "multiplier", 30, 2,
-            "&fサーバー全体のかまど・溶鉱炉・燻製器が &a%s &fの速さで焼き上がります。",
             null, null),
 
     /** 全員の採掘速度を上げる。鳴らした人は1段階上。 */
