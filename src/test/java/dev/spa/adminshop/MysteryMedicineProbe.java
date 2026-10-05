@@ -85,6 +85,8 @@ public final class MysteryMedicineProbe extends JavaPlugin {
         check(medicine.getType() == Material.POTION, "drinkable potion");
         check(((PotionMeta) medicine.getItemMeta()).getBasePotionType() == PotionType.WATER,
                 "no fixed vanilla effect before drinking");
+        check(new org.bukkit.NamespacedKey("adminshop", "mystery_medicine")
+                .equals(medicine.getItemMeta().getItemModel()), "custom texture model on genuine medicine");
 
         Class<?> listenerType = Class.forName("dev.spa.adminshop.MysteryMedicineListener", true,
                 shop.getClass().getClassLoader());

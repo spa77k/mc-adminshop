@@ -203,6 +203,9 @@ SPSMCではインフラの `plugins/AdminShop/config.yml` を正本として管�
 通常のポーションや、他プラグインが飲用をキャンセルした場合には介入しません。
 左右どちらの手からも飲め、クリエイティブでも1個消費します。空き瓶は残りません。
 同じ種類の既存効果との重なりはバニラの処理に従います。
+専用テクスチャは`adminshop:mystery_medicine`のitem modelで識別します。通常のポーションには付けません。
+Java版の共通パックと統合版の専用パックは、隣接する`mc-ecolife`の`scripts/build-phone-packs.py`で生成します。
+透過PNGと生成プロンプトは同リポジトリの`assets/adminshop/`で管理します。
 
 ## 記録
 

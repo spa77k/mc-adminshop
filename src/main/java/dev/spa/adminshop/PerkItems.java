@@ -42,6 +42,7 @@ final class PerkItems {
         meta.lore(lore);
 
         if (Perks.MYSTERY_MEDICINE.equals(item.perk()) && meta instanceof PotionMeta potion) {
+            potion.setItemModel(new NamespacedKey("adminshop", "mystery_medicine"));
             potion.setBasePotionType(PotionType.WATER);
             potion.setColor(Color.fromRGB(128, 48, 160));
             potion.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
