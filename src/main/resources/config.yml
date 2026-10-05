@@ -43,6 +43,23 @@ boosts:
 
 # 売り物。キーが商品IDになる。
 items:
+  mystery_medicine:
+    slot: 13
+    material: POTION
+    display-name: "&d怪しいお薬"
+    lore:
+      - "&7飲むと、自分にランダムな効果が1つ付く。"
+      - "&7良い効果も悪い効果も、何が出るかはお楽しみ。"
+      - "&7強さはランダムにレベルI〜III。"
+      - "&7持続時間もランダムに1〜5分。"
+      - ""
+      - "&7飲み終わると1個消える。"
+      - "&c毒・衰弱・浮遊など危険な効果も出る。"
+    price: 100.0
+    amount: 1
+    glow: true
+    perk: mystery_medicine
+
   return_charm:
     slot: 16
     material: RECOVERY_COMPASS

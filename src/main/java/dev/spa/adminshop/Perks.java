@@ -16,6 +16,7 @@ final class Perks {
     /** 死亡時に防具・左手・ホットバーを手元に残し、護符自身は消える。 */
     static final String KEEPSAKE_CHARM = "keepsake_charm";
     static final String RETURN_CHARM = "return_charm";
+    static final String MYSTERY_MEDICINE = "mystery_medicine";
 
     /** 使うと、サーバー全体の農作物の成長が一定時間だけ速くなる。 */
     static final String GROWTH_BOOST = "growth_boost";
@@ -33,7 +34,7 @@ final class Perks {
     static final String CAPTURE_EGG_FILLED = "capture_egg_filled";
 
     private static final Set<String> KNOWN = Set.of(KEEPSAKE_CHARM, RETURN_CHARM, GROWTH_BOOST,
-            MINING_BOOST, SPEED_BOOST, CAPTURE_EGG);
+            MINING_BOOST, SPEED_BOOST, CAPTURE_EGG, MYSTERY_MEDICINE);
 
     private Perks() {
     }

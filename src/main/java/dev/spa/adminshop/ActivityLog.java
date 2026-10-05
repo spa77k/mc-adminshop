@@ -90,6 +90,19 @@ final class ActivityLog {
         append(boostsFile, fields);
     }
 
+    void logMedicine(UUID uuid, String name, String effect, int level, int seconds, boolean applied) {
+        Map<String, Object> fields = new LinkedHashMap<>();
+        fields.put("at", now());
+        fields.put("player", name);
+        fields.put("uuid", uuid.toString());
+        fields.put("perk", Perks.MYSTERY_MEDICINE);
+        fields.put("effect", effect);
+        fields.put("level", level);
+        fields.put("seconds", seconds);
+        fields.put("applied", applied);
+        append(activationsFile, fields);
+    }
+
     private String now() {
         return ZonedDateTime.now(ZONE).format(TIMESTAMP);
     }
