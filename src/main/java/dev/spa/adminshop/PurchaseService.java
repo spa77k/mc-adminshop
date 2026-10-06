@@ -15,37 +15,42 @@ final class PurchaseService {
     }
 
     void buy(Player player, ShopItem item) {
-        buy(player, item.id(), item.displayName(), item.price(), plugin.perkItems().create(item));
+        PriceEscalation escalation = plugin.escalation();
+        double price = escalation.price(player.getUniqueId(), item);
+        if (buy(player, item.id(), item.displayName(), price, plugin.perkItems().create(item))) {
+            escalation.recordPurchase(player.getUniqueId(), item.id());
+        }
     }
 
     void buyHead(Player player, HeadItem head) {
         buy(player, head.id(), head.displayName(), plugin.shopConfig().headPrice(), head.create());
     }
 
-    private void buy(Player player, String itemId, String displayName, double price, ItemStack stack) {
+    /** 支払いと受け渡しの両方が済んだら true。 */
+    private boolean buy(Player player, String itemId, String displayName, double price, ItemStack stack) {
         ShopConfig config = plugin.shopConfig();
         EconomyService economy = plugin.economy();
 
         if (!player.hasPermission("adminshop.use")) {
             player.sendMessage(Text.prefixed("&cショップを利用する権限がありません。"));
-            return;
+            return false;
         }
 
         if (!economy.has(player, price)) {
             player.sendMessage(Text.prefixed("&c所持金が足りません。&f必要: &e" + config.formatMoney(price)
                     + " &f所持: &e" + config.formatMoney(economy.balance(player))));
-            return;
+            return false;
         }
 
         // 受け取れないまま代金だけ引かれる事故を避けるため、空きを先に確かめる。
         if (player.getInventory().firstEmpty() < 0) {
             player.sendMessage(Text.prefixed("&c持ち物がいっぱいです。1枠以上空けてから購入してください。"));
-            return;
+            return false;
         }
 
         if (!economy.withdraw(player, price)) {
             player.sendMessage(Text.prefixed("&c支払いに失敗しました。時間をおいて試してください。"));
-            return;
+            return false;
         }
 
         Map<Integer, ItemStack> leftover = player.getInventory().addItem(stack);
@@ -54,7 +59,7 @@ final class PurchaseService {
             economy.deposit(player, price);
             player.sendMessage(Text.prefixed("&c商品を渡せなかったため、代金を返金しました。"));
             plugin.getLogger().warning(player.getName() + " へ " + itemId + " を渡せなかったため返金しました。");
-            return;
+            return false;
         }
 
         player.sendMessage(Text.prefixed("&f" + displayName + " &7を購入しました。&8("
@@ -65,5 +70,6 @@ final class PurchaseService {
         if (activityLog != null) {
             activityLog.logPurchase(player.getUniqueId(), player.getName(), itemId, stack.getAmount(), price);
         }
+        return true;
     }
 }

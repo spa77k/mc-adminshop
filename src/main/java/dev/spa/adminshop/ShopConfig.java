@@ -1,10 +1,15 @@
 package dev.spa.adminshop;
 
 import java.text.DecimalFormat;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,11 +32,17 @@ final class ShopConfig {
     private final boolean boostBossBar;
     private final double headPrice;
     private final Map<String, ShopItem> items;
+    private final Set<String> escalationItems;
+    private final List<Double> escalationMultipliers;
+    private final DayOfWeek escalationResetDay;
+    private final int escalationResetHour;
 
     private ShopConfig(String title, int size, String currencySymbol, boolean currencySuffix,
                        boolean protectOnPvpDeath, boolean keepArmor, boolean keepOffhand,
                        boolean keepHotbar, boolean broadcast, int boostMaxTotalMinutes,
-                       boolean boostBossBar, double headPrice, Map<String, ShopItem> items) {
+                       boolean boostBossBar, double headPrice, Map<String, ShopItem> items,
+                       Set<String> escalationItems, List<Double> escalationMultipliers,
+                       DayOfWeek escalationResetDay, int escalationResetHour) {
         this.title = title;
         this.size = size;
         this.currencySymbol = currencySymbol;
@@ -45,6 +56,10 @@ final class ShopConfig {
         this.boostBossBar = boostBossBar;
         this.headPrice = headPrice;
         this.items = items;
+        this.escalationItems = escalationItems;
+        this.escalationMultipliers = escalationMultipliers;
+        this.escalationResetDay = escalationResetDay;
+        this.escalationResetHour = escalationResetHour;
     }
 
     static ShopConfig load(JavaPlugin plugin) {
@@ -129,7 +144,36 @@ final class ShopConfig {
                 config.getBoolean("boosts.boss-bar",
                         config.getBoolean("growth-boost.boss-bar", true)),
                 headPrice,
-                items);
+                items,
+                Set.copyOf(new LinkedHashSet<>(config.getStringList("price-escalation.items"))),
+                readMultipliers(plugin, config.getDoubleList("price-escalation.multipliers")),
+                readResetDay(plugin, config.getString("price-escalation.reset-day", "MONDAY")),
+                Math.max(0, Math.min(23, config.getInt("price-escalation.reset-hour", 4))));
+    }
+
+    /** 1個目は必ず定価にする。不正な倍率は1.0として扱う。 */
+    private static List<Double> readMultipliers(JavaPlugin plugin, List<Double> raw) {
+        List<Double> multipliers = new ArrayList<>();
+        multipliers.add(1.0D);
+        for (int index = 1; index < raw.size(); index++) {
+            double value = raw.get(index);
+            if (!Double.isFinite(value) || value < 1.0D) {
+                plugin.getLogger().warning("price-escalation.multipliers の" + (index + 1)
+                        + "番目が不正なため1.0を使います: " + value);
+                value = 1.0D;
+            }
+            multipliers.add(value);
+        }
+        return List.copyOf(multipliers);
+    }
+
+    private static DayOfWeek readResetDay(JavaPlugin plugin, String raw) {
+        try {
+            return DayOfWeek.valueOf(raw.trim().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException exception) {
+            plugin.getLogger().warning("price-escalation.reset-day が不正なため月曜日を使います: " + raw);
+            return DayOfWeek.MONDAY;
+        }
     }
 
     private static ShopItem readItem(JavaPlugin plugin, String id, ConfigurationSection section, int shopSize) {
@@ -221,6 +265,25 @@ final class ShopConfig {
 
     double headPrice() {
         return headPrice;
+    }
+
+    /** 同じ週に買うほど値上がりする商品か。 */
+    boolean escalates(String itemId) {
+        return escalationItems.contains(itemId);
+    }
+
+    /** その週の何個目か（1始まり）に掛ける倍率。並べた数を超えたら最後の倍率のまま。 */
+    double escalationMultiplier(int nth) {
+        int index = Math.max(0, Math.min(nth, escalationMultipliers.size()) - 1);
+        return escalationMultipliers.get(index);
+    }
+
+    DayOfWeek escalationResetDay() {
+        return escalationResetDay;
+    }
+
+    int escalationResetHour() {
+        return escalationResetHour;
     }
 
     ShopItem item(String id) {

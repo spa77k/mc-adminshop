@@ -41,6 +41,20 @@ boosts:
   # 効果が続いている間、全員のボスバーに残り時間を出す。
   boss-bar: true
 
+# 同じ人が同じ週に同じ商品を買うほど値上がりする。たくさん買う人ほど多く払う形にして、
+# 出回るお金を減らす。数えるのはショップでの購入だけで、個数は escalation.yml に残る。
+price-escalation:
+  # 対象の商品ID。ここにない商品はいつも定価。
+  items:
+    - keepsake_charm
+    - return_charm
+    - capture_egg
+  # その週のn個目に掛ける倍率。1個目は常に定価（1.0）。並べた数より多く買うと最後の倍率のまま。
+  multipliers: [1.0, 1.5, 2.0]
+  # 週の区切り（サーバーの時刻）。この曜日・時刻に全員の個数が0に戻る。
+  reset-day: MONDAY
+  reset-hour: 4
+
 # 売り物。キーが商品IDになる。
 items:
   mystery_medicine:

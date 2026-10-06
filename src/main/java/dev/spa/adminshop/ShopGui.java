@@ -74,7 +74,8 @@ final class ShopGui {
         holder.setInventory(inventory);
 
         inventory.setItem(ConfirmHolder.BUY_SLOT, button(Material.LIME_CONCRETE, "&a購入する",
-                List.of("&7" + config.formatMoney(item.price()) + " を支払う")));
+                List.of("&7" + config.formatMoney(plugin.escalation().price(player.getUniqueId(), item))
+                        + " を支払う")));
         inventory.setItem(ConfirmHolder.ITEM_SLOT, display(item, player, config));
         inventory.setItem(ConfirmHolder.CANCEL_SLOT, button(Material.RED_CONCRETE, "&cやめる",
                 List.of("&7ショップの一覧へ戻る")));
@@ -89,7 +90,18 @@ final class ShopGui {
 
         List<Component> lore = meta.lore() == null ? new ArrayList<>() : new ArrayList<>(meta.lore());
         lore.add(Text.item(""));
-        lore.add(Text.item("&6価格: &f" + config.formatMoney(item.price())));
+        PriceEscalation escalation = plugin.escalation();
+        lore.add(Text.item("&6価格: &f" + config.formatMoney(escalation.price(player.getUniqueId(), item))));
+        if (config.escalates(item.id())) {
+            int nth = escalation.nextNumber(player.getUniqueId(), item.id());
+            if (nth > 1) {
+                lore.add(Text.item("&c今週" + nth + "個目のため値上がり中&7（定価 "
+                        + config.formatMoney(item.price()) + "）"));
+                lore.add(Text.item("&7" + escalation.nextResetLabel() + " に定価へ戻る"));
+            } else {
+                lore.add(Text.item("&7同じ週の2個目からは値上がりする"));
+            }
+        }
         lore.add(Text.item("&7所持金: &f" + config.formatMoney(plugin.economy().balance(player))));
         meta.lore(lore);
 

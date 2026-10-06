@@ -15,6 +15,7 @@ public final class AdminShopPlugin extends JavaPlugin {
     private PurchaseService purchases;
     private HeadCatalog headCatalog;
     private ServerBoostService boosts;
+    private PriceEscalation escalation;
 
     @Override
     public void onEnable() {
@@ -31,6 +32,7 @@ public final class AdminShopPlugin extends JavaPlugin {
         }
 
         this.activityLog = ActivityLog.open(this);
+        this.escalation = PriceEscalation.load(this);
         this.purchases = new PurchaseService(this);
         this.shopGui = new ShopGui(this);
         this.boosts = new ServerBoostService(this);
@@ -120,5 +122,9 @@ public final class AdminShopPlugin extends JavaPlugin {
 
     ServerBoostService boosts() {
         return boosts;
+    }
+
+    PriceEscalation escalation() {
+        return escalation;
     }
 }
