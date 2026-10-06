@@ -16,6 +16,8 @@ JAVA = os.environ.get("JAVA_BIN", "/opt/homebrew/opt/openjdk/bin/java")
 
 
 def main():
+    # 前回のワールドに生き物やブロックが残ると結果が変わるため、毎回作り直す。
+    shutil.rmtree(WORK, ignore_errors=True)
     plugins = WORK / "plugins"
     plugins.mkdir(parents=True, exist_ok=True)
     for source, target in (
