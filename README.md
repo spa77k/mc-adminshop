@@ -18,7 +18,7 @@ PaperMC サーバー向けの、管理者が無限在庫で商品を売るショ
 
 ## 動作環境
 
-- Minecraft サーバー: PaperMC 26.1.2
+- Minecraft サーバー: PaperMC 26.1.2〜26.3
 - 対象 API: Paper API `1.21-R0.1-SNAPSHOT`
 - Java: 21
 - ビルドツール: Maven
