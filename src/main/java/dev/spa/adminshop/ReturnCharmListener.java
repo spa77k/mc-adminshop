@@ -112,7 +112,9 @@ final class ReturnCharmListener implements Listener {
         stack.setAmount(stack.getAmount() - 1);
         boolean moved = false;
         try {
-            moved = player.teleport(target, TeleportCause.PLUGIN);
+            // 行き先を指定した移動としてCOMMANDで送る。PLUGINだと、別ワールドから使ったときに
+            // ワールドの入口への移動とみなされ、前回地点への復元や初回RTPで行き先を上書きされる。
+            moved = player.teleport(target, TeleportCause.COMMAND);
             if (moved) {
                 player.setFallDistance(0);
                 tell(player, "&b最後に死亡した場所の近くへ戻りました。帰還の護符を1個消費しました。");
